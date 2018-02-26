@@ -6,12 +6,17 @@ function Compiler() {
 }
 
 Compiler.prototype = Object.create(Tapable.prototype);
+Compiler.prototype.run = function() {
+  console.log('Running Compiler');
+  this.applyPlugins('emit');
+}
 
 const compiler = new Compiler();
 
 function CustomPlugin(options) {
   this.name = options.name;
-}
+};
+
 /*
 Tapable.prototype.plugin = function plugin(name, fn) {
 	if(Array.isArray(name)) {
@@ -27,7 +32,7 @@ Tapable.prototype.plugin = function plugin(name, fn) {
 
 CustomPlugin.prototype.apply = function(compiler) {
   // 调用 compiler.plugin，将 CustomPlugin 实例的回调函数注册到
-  // compiler 的 'emit' 时间上，compiler 是继承自 Tapable 的实例。
+  // compiler 的 'emit' 事件上，compiler 是继承自 Tapable 的实例。
   compiler.plugin('emit', (...args) => {
     console.log(`hello, ${this.name}`);
     console.log(`emit arguments: ${args}`);
@@ -37,15 +42,16 @@ CustomPlugin.prototype.apply = function(compiler) {
 const custom1Plugin = new CustomPlugin({ name: 'adi' });
 const custom2Plugin = new CustomPlugin({ name: 'spring' });
 
-
+/*
 Tapable.prototype.apply = function apply() {
 	for(var i = 0; i < arguments.length; i++) {
 		arguments[i].apply(this);
 	}
 };
+*/
 
 compiler.apply(custom1Plugin, custom2Plugin);
 
-compiler.applyPlugins('emit', 'webpack', 'running');
+// compiler.applyPlugins('emit', 'webpack', 'running');
+compiler.run();
 /* custom1Plugin.apply(compiler);*/
-
