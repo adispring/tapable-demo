@@ -10,17 +10,5 @@
             "name": "Debug Current File",
             "program": "${file}"
         },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch index",
-            "program": "${workspaceFolder}/tapable.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch tapable",
-            "program": "${workspaceFolder}/tapable.js"
-        }
     ]
 }
